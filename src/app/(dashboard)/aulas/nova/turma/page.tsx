@@ -1,0 +1,8 @@
+import { createClassLessons } from "@/actions/lesson-actions";
+import { ClassLessonForm } from "@/components/lessons/class-lesson-form";
+import { Button } from "@/components/ui/button";
+import { EmptyState, Feedback } from "@/components/ui/feedback";
+import { PageHeader } from "@/components/ui/page-header";
+import { prisma } from "@/lib/prisma";
+
+export default async function NewClassLessonPage({ searchParams }: { searchParams: Promise<{ classId?: string; error?: string }> }) { const p = await searchParams; const groups = await prisma.classGroup.findMany({ where: { status: "ACTIVE" }, orderBy: { name: "asc" }, select: { id: true, name: true } }); const selected = p.classId ? await prisma.classGroup.findFirst({ where: { id: p.classId, status: "ACTIVE" }, select: { id: true, name: true, students: { where: { status: "ACTIVE" }, orderBy: { name: "asc" }, select: { id: true, name: true } } } }) : null; return <div className="page-stack"><PageHeader title="Registrar aula por turma" description="Preencha os dados comuns uma vez e faça a chamada dos alunos." /><Feedback error={p.error} /><form className="filter-toolbar sm:grid-cols-[minmax(240px,400px)_auto]"><select name="classId" defaultValue={p.classId} required><option value="">Selecione uma turma</option>{groups.map((group) => <option key={group.id} value={group.id}>{group.name}</option>)}</select><Button type="submit" variant="outline">Continuar</Button></form>{selected && (selected.students.length ? <ClassLessonForm action={createClassLessons.bind(null, selected.id)} className={selected.name} students={selected.students} /> : <EmptyState title="Esta turma não possui alunos ativos" description="Vincule alunos ativos antes de registrar a aula." />)}</div>; }

@@ -1,0 +1,4 @@
+ALTER TABLE "Student"
+  ALTER COLUMN "className" DROP NOT NULL,
+  ALTER COLUMN "subject" DROP NOT NULL,
+  ALTER COLUMN "teacherName" DROP NOT NULL;

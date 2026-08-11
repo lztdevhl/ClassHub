@@ -1,0 +1,10 @@
+import { changePassword, updateProfile } from "@/actions/settings-actions";
+import { Button } from "@/components/ui/button";
+import { Feedback } from "@/components/ui/feedback";
+import { PageHeader } from "@/components/ui/page-header";
+import { requireCurrentUser } from "@/lib/auth/session";
+
+export default async function SettingsPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
+  const [user, feedback] = await Promise.all([requireCurrentUser(), searchParams]);
+  return <div className="page-stack"><PageHeader title="Configurações" description="Dados do professor e segurança de acesso." /><Feedback {...feedback} /><div className="max-w-[640px] space-y-6"><section className="settings-card"><div><h2 className="section-heading">Perfil do professor</h2><p className="mt-1 text-[13px] text-[var(--muted)]">O email de acesso não pode ser alterado por esta tela.</p></div><form action={updateProfile} className="mt-6 space-y-5"><div><label htmlFor="name" className="field-label">Nome</label><input id="name" name="name" required minLength={2} defaultValue={user.name} className="mt-1.5 block h-10 w-full px-3" /></div><div><label htmlFor="email" className="field-label">Email</label><input id="email" value={user.email} disabled className="mt-1.5 block h-10 w-full px-3" /></div><Button type="submit">Salvar perfil</Button></form></section><section className="settings-card"><div><h2 className="section-heading">Alterar senha</h2><p className="mt-1 text-[13px] text-[var(--muted)]">Ao trocar a senha, todas as sessões serão encerradas.</p></div><form action={changePassword} className="mt-6 space-y-5"><div><label htmlFor="password" className="field-label">Nova senha</label><input id="password" name="password" type="password" required minLength={12} autoComplete="new-password" className="mt-1.5 block h-10 w-full px-3" /><p className="field-help">Use de 12 a 72 bytes, com letras, números e símbolos.</p></div><Button type="submit" variant="outline">Atualizar senha</Button></form></section></div></div>;
+}

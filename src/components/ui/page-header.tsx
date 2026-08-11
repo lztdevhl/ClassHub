@@ -1,0 +1,3 @@
+export function PageHeader({ eyebrow, title, description, actions }: { eyebrow?: string; title: string; description?: string; actions?: React.ReactNode }) {
+  return <header className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between"><div>{eyebrow && <p className="mb-1 text-xs font-medium text-[var(--muted-foreground)]">{eyebrow}</p>}<h1 className="text-[30px] font-semibold leading-[1.2] tracking-[-0.035em] text-[var(--foreground)]">{title}</h1>{description && <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">{description}</p>}</div>{actions && <div className="flex shrink-0 flex-wrap gap-2 sm:pt-1">{actions}</div>}</header>;
+}
