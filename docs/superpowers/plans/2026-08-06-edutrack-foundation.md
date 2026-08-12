@@ -1,8 +1,8 @@
-# ClassHub Foundation Implementation Plan
+# EduTrack Foundation Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Entregar a fundação executável do ClassHub com Next.js, qualidade automatizada, Prisma Postgres, seed, autenticação própria e shell administrativo protegido.
+**Goal:** Entregar a fundação executável do EduTrack com Next.js, qualidade automatizada, Prisma Postgres, seed, autenticação própria e shell administrativo protegido.
 
 **Architecture:** O sistema será um monólito modular no Next.js App Router. Server Actions formam a fronteira de entrada, serviços concentram regras e repositórios isolam Prisma; autenticação usa sessão opaca persistida como hash e cookie seguro.
 
@@ -30,9 +30,9 @@
 
 Este plano cobre somente o Ciclo 1 aprovado. Os próximos documentos serão independentes e executados nesta ordem:
 
-1. `classhub-students-lessons-dashboard`: alunos, aulas, página individual e dashboard real.
-2. `classhub-history-reports-settings`: histórico, filtros, relatórios, PDF e configurações.
-3. `classhub-delivery`: estados finais, acessibilidade, responsividade, README completo, Vercel e verificação de entrega.
+1. `edutrack-students-lessons-dashboard`: alunos, aulas, página individual e dashboard real.
+2. `edutrack-history-reports-settings`: histórico, filtros, relatórios, PDF e configurações.
+3. `edutrack-delivery`: estados finais, acessibilidade, responsividade, README completo, Vercel e verificação de entrega.
 
 Nenhum stub de domínio ou dado fictício será criado para antecipar esses ciclos.
 
@@ -48,7 +48,7 @@ Nenhum stub de domínio ou dado fictício será criado para antecipar esses cicl
 - `vitest.config.ts`: ambiente e aliases dos testes.
 - `vitest.setup.ts`: matchers de DOM.
 - `src/app/layout.tsx`: documento raiz, fonte Geist e metadados.
-- `src/app/globals.css`: tokens visuais do ClassHub.
+- `src/app/globals.css`: tokens visuais do EduTrack.
 - `src/lib/utils.ts`: composição de classes.
 
 ### Configuration and persistence
@@ -287,7 +287,7 @@ import "./globals.css";
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
-  title: { default: "ClassHub", template: "%s | ClassHub" },
+  title: { default: "EduTrack", template: "%s | EduTrack" },
   description: "Sistema interno para acompanhamento de alunos e aulas.",
 };
 
@@ -304,7 +304,7 @@ Create `src/app/page.tsx`:
 
 ```tsx
 export default function FoundationPage() {
-  return <main><h1>ClassHub</h1></main>;
+  return <main><h1>EduTrack</h1></main>;
 }
 ```
 
@@ -364,7 +364,7 @@ Expected: all four commands exit with code 0.
 
 ```powershell
 git add package.json pnpm-lock.yaml tsconfig.json next-env.d.ts next.config.ts eslint.config.mjs postcss.config.mjs vitest.config.ts vitest.setup.ts .gitignore src
-git commit -m "chore: bootstrap ClassHub application"
+git commit -m "chore: bootstrap EduTrack application"
 ```
 
 ---
@@ -392,10 +392,10 @@ import { describe, expect, it } from "vitest";
 import { parseServerEnv } from "@/config/env";
 
 const validEnv = {
-  DATABASE_URL: "postgresql://app:secret@pooled.db.prisma.io:5432/classhub",
-  DIRECT_URL: "postgresql://app:secret@db.prisma.io:5432/classhub",
+  DATABASE_URL: "postgresql://app:secret@pooled.db.prisma.io:5432/edutrack",
+  DIRECT_URL: "postgresql://app:secret@db.prisma.io:5432/edutrack",
   INITIAL_ADMIN_NAME: "Administrador",
-  INITIAL_ADMIN_EMAIL: "admin@classhub.local",
+  INITIAL_ADMIN_EMAIL: "admin@edutrack.local",
   INITIAL_ADMIN_PASSWORD: "uma-senha-com-16",
   SESSION_SECRET: "12345678901234567890123456789012",
   APP_URL: "http://localhost:3000",
@@ -403,8 +403,8 @@ const validEnv = {
 
 describe("parseServerEnv", () => {
   it("normalizes the initial administrator email", () => {
-    expect(parseServerEnv({ ...validEnv, INITIAL_ADMIN_EMAIL: " ADMIN@CLASSHUB.LOCAL " }).INITIAL_ADMIN_EMAIL)
-      .toBe("admin@classhub.local");
+    expect(parseServerEnv({ ...validEnv, INITIAL_ADMIN_EMAIL: " ADMIN@EDUTRACK.LOCAL " }).INITIAL_ADMIN_EMAIL)
+      .toBe("admin@edutrack.local");
   });
 
   it("rejects a short session secret", () => {
@@ -480,7 +480,7 @@ corepack pnpm test -- src/config/env.test.ts
 corepack pnpm run typecheck
 corepack pnpm run lint
 git add .env.example src/config src/types
-git commit -m "feat: validate ClassHub environment"
+git commit -m "feat: validate EduTrack environment"
 ```
 
 Expected: tests, types and lint pass.
@@ -515,11 +515,11 @@ describe("parseSeedAdmin", () => {
   it("returns normalized administrator data", () => {
     expect(parseSeedAdmin({
       INITIAL_ADMIN_NAME: " Administrador ",
-      INITIAL_ADMIN_EMAIL: " ADMIN@CLASSHUB.LOCAL ",
+      INITIAL_ADMIN_EMAIL: " ADMIN@EDUTRACK.LOCAL ",
       INITIAL_ADMIN_PASSWORD: "uma-senha-com-16",
     })).toEqual({
       name: "Administrador",
-      email: "admin@classhub.local",
+      email: "admin@edutrack.local",
       password: "uma-senha-com-16",
     });
   });
@@ -737,7 +737,7 @@ Expected: test passes, migration is created, seed reports one administrator, and
 
 ```powershell
 git add prisma prisma.config.ts src/lib/prisma.ts src/lib/seed-env.ts tests/unit/seed-env.test.ts
-git commit -m "feat: add ClassHub persistence foundation"
+git commit -m "feat: add EduTrack persistence foundation"
 ```
 
 ---
@@ -818,7 +818,7 @@ describe("auth service", () => {
     users = new MemoryUsers([{
       id: "user-1",
       name: "Administrador",
-      email: "admin@classhub.local",
+      email: "admin@edutrack.local",
       passwordHash: await hashPassword("senha-correta-123"),
     }]);
     sessions = new MemorySessions(users);
@@ -828,7 +828,7 @@ describe("auth service", () => {
 
   it("accepts the correct password and creates an opaque session", async () => {
     const deps = makeDeps();
-    const auth = await authenticate({ email: " ADMIN@CLASSHUB.LOCAL ", password: "senha-correta-123" }, deps);
+    const auth = await authenticate({ email: " ADMIN@EDUTRACK.LOCAL ", password: "senha-correta-123" }, deps);
     expect(auth).toMatchObject({ ok: true, user: { id: "user-1" } });
     const session = await createSession("user-1", deps);
     expect(session.token).not.toContain("user-1");
@@ -836,12 +836,12 @@ describe("auth service", () => {
   });
 
   it("returns invalid_credentials for an unknown email", async () => {
-    await expect(authenticate({ email: "unknown@classhub.local", password: "qualquer-senha" }, makeDeps()))
+    await expect(authenticate({ email: "unknown@edutrack.local", password: "qualquer-senha" }, makeDeps()))
       .resolves.toEqual({ ok: false, reason: "invalid_credentials" });
   });
 
   it("returns invalid_credentials for a wrong password", async () => {
-    await expect(authenticate({ email: "admin@classhub.local", password: "senha-incorreta" }, makeDeps()))
+    await expect(authenticate({ email: "admin@edutrack.local", password: "senha-incorreta" }, makeDeps()))
       .resolves.toEqual({ ok: false, reason: "invalid_credentials" });
   });
 
@@ -874,7 +874,7 @@ Expected: FAIL because the auth modules do not exist.
 Create `src/lib/auth/constants.ts`:
 
 ```ts
-export const SESSION_COOKIE_NAME = "classhub_session";
+export const SESSION_COOKIE_NAME = "edutrack_session";
 export const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7;
 export const BCRYPT_COST = 12;
 ```
@@ -1062,8 +1062,8 @@ import { loginSchema } from "@/schemas/login-schema";
 
 describe("loginSchema", () => {
   it("normalizes a valid email", () => {
-    expect(loginSchema.parse({ email: " ADMIN@CLASSHUB.LOCAL ", password: "senha" }).email)
-      .toBe("admin@classhub.local");
+    expect(loginSchema.parse({ email: " ADMIN@EDUTRACK.LOCAL ", password: "senha" }).email)
+      .toBe("admin@edutrack.local");
   });
 
   it("returns the public email message for an invalid email", () => {
@@ -1072,7 +1072,7 @@ describe("loginSchema", () => {
   });
 
   it("requires a password without describing the password policy", () => {
-    const result = loginSchema.safeParse({ email: "admin@classhub.local", password: "" });
+    const result = loginSchema.safeParse({ email: "admin@edutrack.local", password: "" });
     expect(result.error?.flatten().fieldErrors.password).toEqual(["Informe sua senha."]);
   });
 });
@@ -1138,7 +1138,7 @@ describe("LoginFormView", () => {
 
 - [ ] **Step 5: Build the login page**
 
-The page must show the ClassHub mark, title `Acessar o ClassHub`, short instruction `Entre com as credenciais configuradas para o sistema.` and the form. It must not contain marketing copy, illustration, plan or public registration link.
+The page must show the EduTrack mark, title `Acessar o EduTrack`, short instruction `Entre com as credenciais configuradas para o sistema.` and the form. It must not contain marketing copy, illustration, plan or public registration link.
 
 - [ ] **Step 6: Write and implement Proxy redirect tests**
 
@@ -1168,7 +1168,7 @@ Then start `corepack pnpm run dev` and manually verify invalid credentials remai
 
 ```powershell
 git add src/schemas src/actions src/components/auth 'src/app/(auth)' src/proxy.ts tests/unit/proxy.test.ts
-git commit -m "feat: add ClassHub login flow"
+git commit -m "feat: add EduTrack login flow"
 ```
 
 ---
@@ -1218,7 +1218,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 describe("AppSidebar", () => {
   it("shows the enabled overview and no dead links for future modules", () => {
     render(<AppSidebar pathname="/" />);
-    expect(screen.getByText("ClassHub")).toBeVisible();
+    expect(screen.getByText("EduTrack")).toBeVisible();
     expect(screen.getByRole("link", { name: "Visão geral" })).toHaveAttribute("href", "/");
     expect(screen.queryByRole("link", { name: "Alunos" })).not.toBeInTheDocument();
     expect(screen.getByText("Alunos")).toHaveAttribute("aria-disabled", "true");
@@ -1283,7 +1283,7 @@ describe("foundation dashboard", () => {
 
 Render the approved shell and an empty state only. Do not query students before the student repository exists and do not render hard-coded totals. The next plan replaces the disabled action and adds real metrics atomically.
 
-- [ ] **Step 8: Apply the ClassHub visual tokens**
+- [ ] **Step 8: Apply the EduTrack visual tokens**
 
 In `globals.css`, define light theme tokens using neutral gray surfaces, indigo primary, compact 7–10px radii, minimal shadows, visible focus rings and semantic green/red/amber colors. Preserve shadcn variable names, WCAG-readable contrast and Geist typography. Do not install Motion.
 
@@ -1302,7 +1302,7 @@ Expected: all commands pass; build contains `/`, `/login` and Proxy.
 
 ```powershell
 git add components.json src/components/ui src/components/layout src/config/navigation.ts src/app src/app/globals.css
-git commit -m "feat: add protected ClassHub shell"
+git commit -m "feat: add protected EduTrack shell"
 ```
 
 ---
@@ -1367,11 +1367,11 @@ Expected: no temporary logs, placeholders, mock dashboard values or forbidden se
 
 ```powershell
 git add README.md .env.example
-git commit -m "docs: add ClassHub foundation setup"
+git commit -m "docs: add EduTrack foundation setup"
 ```
 
 - [ ] **Step 6: Record completion evidence**
 
 Capture the exact passing-test count printed by `corepack pnpm test`, followed by `Lint: passed`, `Types: passed`, `Build: passed`, `Manual auth: passed`, and `Known limitation: domain modules begin in the next implementation plan`.
 
-Do not mark the full ClassHub complete at this checkpoint.
+Do not mark the full EduTrack complete at this checkpoint.

@@ -1,8 +1,8 @@
-# Deploy do ClassHub na Vercel
+# Deploy do EduTrack na Vercel
 
 ## 1. Pré-requisitos
 
-- Repositório do ClassHub no GitHub.
+- Repositório do EduTrack no GitHub.
 - Projeto na Vercel conectado ao repositório.
 - PostgreSQL hospedado, vazio e acessível externamente.
 - Node.js 20.19 ou superior para executar Prisma localmente.

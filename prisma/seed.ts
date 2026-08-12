@@ -14,7 +14,7 @@ const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) })
 async function main() {
   const passwordHash = await bcrypt.hash(admin.password, 12);
   await prisma.user.upsert({ where: { email: admin.email }, create: { name: admin.name, email: admin.email, passwordHash, settings: { create: {} } }, update: { name: admin.name, passwordHash } });
-  console.info("Administrador inicial do ClassHub provisionado.");
+  console.info("Administrador inicial do EduTrack provisionado.");
 }
 
 main().catch((error: unknown) => { console.error(error); process.exitCode = 1; }).finally(async () => prisma.$disconnect());

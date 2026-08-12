@@ -54,7 +54,7 @@ describe("auth service", () => {
     users = new MemoryUsers([{
       id: "user-1",
       name: "Administrador",
-      email: "admin@classhub.local",
+      email: "admin@edutrack.local",
       passwordHash: await hashPassword("senha-correta-123"),
     }]);
     sessions = new MemorySessions(users);
@@ -64,7 +64,7 @@ describe("auth service", () => {
 
   it("accepts the correct password and creates an opaque session", async () => {
     const deps = makeDeps();
-    const auth = await authenticate({ email: " ADMIN@CLASSHUB.LOCAL ", password: "senha-correta-123" }, deps);
+    const auth = await authenticate({ email: " ADMIN@EDUTRACK.LOCAL ", password: "senha-correta-123" }, deps);
 
     expect(auth).toMatchObject({ ok: true, user: { id: "user-1" } });
 
@@ -76,12 +76,12 @@ describe("auth service", () => {
   });
 
   it("returns invalid_credentials for an unknown email", async () => {
-    await expect(authenticate({ email: "unknown@classhub.local", password: "qualquer-senha" }, makeDeps()))
+    await expect(authenticate({ email: "unknown@edutrack.local", password: "qualquer-senha" }, makeDeps()))
       .resolves.toEqual({ ok: false, reason: "invalid_credentials" });
   });
 
   it("returns invalid_credentials for a wrong password", async () => {
-    await expect(authenticate({ email: "admin@classhub.local", password: "senha-incorreta" }, makeDeps()))
+    await expect(authenticate({ email: "admin@edutrack.local", password: "senha-incorreta" }, makeDeps()))
       .resolves.toEqual({ ok: false, reason: "invalid_credentials" });
   });
 
@@ -111,7 +111,7 @@ describe("auth service", () => {
     await expect(validateSession(token, makeDeps())).resolves.toEqual({
       id: "user-1",
       name: "Administrador",
-      email: "admin@classhub.local",
+      email: "admin@edutrack.local",
     });
   });
 

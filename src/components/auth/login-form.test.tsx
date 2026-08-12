@@ -39,14 +39,14 @@ describe("LoginFormView", () => {
         state={{
           status: "unauthorized",
           message: "E-mail ou senha inválidos.",
-          values: { email: "admin@classhub.local" },
+          values: { email: "admin@edutrack.local" },
         }}
         pending={false}
         formAction={vi.fn()}
       />,
     );
 
-    expect(screen.getByLabelText("E-mail")).toHaveValue("admin@classhub.local");
+    expect(screen.getByLabelText("E-mail")).toHaveValue("admin@edutrack.local");
     expect(screen.getByLabelText("Senha")).toHaveValue("");
   });
 });

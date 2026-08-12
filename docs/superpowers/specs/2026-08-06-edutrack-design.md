@@ -1,4 +1,4 @@
-# ClassHub — Especificação de design
+# EduTrack — Especificação de design
 
 **Data:** 6 de agosto de 2026  
 **Status:** aprovado para planejamento  
@@ -7,7 +7,7 @@
 
 ## 1. Objetivo
 
-O ClassHub será uma aplicação web interna para cadastrar alunos, registrar aulas e faltas, acompanhar atividades e produzir relatórios organizados para professores. O produto deve funcionar como ferramenta real de trabalho, com interface profissional, operação rápida e dados persistentes.
+O EduTrack será uma aplicação web interna para cadastrar alunos, registrar aulas e faltas, acompanhar atividades e produzir relatórios organizados para professores. O produto deve funcionar como ferramenta real de trabalho, com interface profissional, operação rápida e dados persistentes.
 
 O acesso inicial será por login. Não haverá landing page, cadastro público ou conteúdo comercial.
 
@@ -68,7 +68,7 @@ Não serão implementados nesta versão:
 
 ## 4. Decisão de arquitetura
 
-O ClassHub será um monólito modular em Next.js App Router, implantado na Vercel e executado no runtime Node.js.
+O EduTrack será um monólito modular em Next.js App Router, implantado na Vercel e executado no runtime Node.js.
 
 ```text
 Páginas e componentes
@@ -125,7 +125,7 @@ Variáveis mínimas:
 DATABASE_URL="postgresql://conexao-agrupada"
 DIRECT_URL="postgresql://conexao-direta"
 INITIAL_ADMIN_NAME="Administrador"
-INITIAL_ADMIN_EMAIL="admin@classhub.local"
+INITIAL_ADMIN_EMAIL="admin@edutrack.local"
 INITIAL_ADMIN_PASSWORD="alterar-esta-senha"
 SESSION_SECRET="adicione-uma-chave-segura"
 APP_URL="http://localhost:3000"
@@ -392,7 +392,7 @@ O PDF será gerado no servidor com `@react-pdf/renderer`. A implementação ser�
 
 O documento conterá:
 
-- marca textual ClassHub;
+- marca textual EduTrack;
 - título e período;
 - dados do aluno e professor;
 - resumo numérico;

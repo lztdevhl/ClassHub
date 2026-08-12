@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { resolvePrismaDatasourceUrl } from "@/lib/prisma-config";
 
 describe("resolvePrismaDatasourceUrl", () => {
-  const directUrl = "postgresql://app:secret@db.example.com:5432/classhub";
-  const databaseUrl = "postgresql://app:secret@pooled.db.example.com:5432/classhub";
+  const directUrl = "postgresql://app:secret@db.example.com:5432/edutrack";
+  const databaseUrl = "postgresql://app:secret@pooled.db.example.com:5432/edutrack";
 
   it.each([
     ["generate", ["generate"]],

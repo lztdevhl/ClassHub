@@ -7,15 +7,15 @@ describe("Prisma auth repositories", () => {
     const findUnique = vi.fn().mockResolvedValue({
       id: "user-1",
       name: "Administrador",
-      email: "admin@classhub.local",
+      email: "admin@edutrack.local",
       passwordHash: "password-hash",
     });
     const repository = new PrismaAuthUserRepository({ user: { findUnique } } as never);
 
-    await expect(repository.findByEmail("admin@classhub.local")).resolves.toEqual({
+    await expect(repository.findByEmail("admin@edutrack.local")).resolves.toEqual({
       id: "user-1",
       name: "Administrador",
-      email: "admin@classhub.local",
+      email: "admin@edutrack.local",
       passwordHash: "password-hash",
     });
   });
@@ -32,14 +32,14 @@ describe("Prisma auth repositories", () => {
     const findUnique = vi.fn().mockResolvedValue({
       tokenHash: "token-hash",
       expiresAt,
-      user: { id: "user-1", name: "Administrador", email: "admin@classhub.local" },
+      user: { id: "user-1", name: "Administrador", email: "admin@edutrack.local" },
     });
     const repository = new PrismaAuthSessionRepository({ session: { findUnique } } as never);
 
     await expect(repository.findByTokenHash("token-hash")).resolves.toEqual({
       tokenHash: "token-hash",
       expiresAt,
-      user: { id: "user-1", name: "Administrador", email: "admin@classhub.local" },
+      user: { id: "user-1", name: "Administrador", email: "admin@edutrack.local" },
     });
   });
 

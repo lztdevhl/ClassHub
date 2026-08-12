@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   };
   const report = await getReportData(params);
   const pdf = new SimplePdf();
-  pdf.text("ClassHub", { size: 18, bold: true, gap: 22 });
+  pdf.text("EduTrack", { size: 18, bold: true, gap: 22 });
   pdf.text("Relatorio de acompanhamento", { size: 13, bold: true, gap: 18 });
   pdf.text(`Gerado em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "long", timeStyle: "short" }).format(new Date())}`);
   pdf.text([`Periodo: ${params.from || "inicio"} ate ${params.to || "hoje"}`, `Presenca: ${params.attendance || "todas"}`, `Atividade: ${params.activity === "true" ? "concluida" : params.activity === "false" ? "pendente" : "todas"}`].join(" | "), { size: 9 });
@@ -38,5 +38,5 @@ export async function GET(request: Request) {
   }
 
   const bytes = pdf.build();
-  return new Response(bytes.buffer as ArrayBuffer, { headers: { "Content-Type": "application/pdf", "Content-Disposition": `attachment; filename="classhub-relatorio-${new Date().toISOString().slice(0, 10)}.pdf"` } });
+  return new Response(bytes.buffer as ArrayBuffer, { headers: { "Content-Type": "application/pdf", "Content-Disposition": `attachment; filename="edutrack-relatorio-${new Date().toISOString().slice(0, 10)}.pdf"` } });
 }

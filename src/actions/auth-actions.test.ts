@@ -45,26 +45,26 @@ describe("auth actions", () => {
   it("returns the normalized e-mail but never the password after a credential error", async () => {
     authenticate.mockResolvedValueOnce({ ok: false, reason: "invalid_credentials" });
     const formData = new FormData();
-    formData.set("email", " ADMIN@CLASSHUB.LOCAL ");
+    formData.set("email", " ADMIN@EDUTRACK.LOCAL ");
     formData.set("password", "senha-secreta");
 
     await expect(loginAction(idleState, formData)).resolves.toEqual({
       status: "unauthorized",
       message: "E-mail ou senha inválidos.",
-      values: { email: "admin@classhub.local" },
+      values: { email: "admin@edutrack.local" },
     });
   });
 
   it("uses one public message for invalid credentials", async () => {
     authenticate.mockResolvedValueOnce({ ok: false, reason: "invalid_credentials" });
     const formData = new FormData();
-    formData.set("email", "admin@classhub.local");
+    formData.set("email", "admin@edutrack.local");
     formData.set("password", "senha");
 
     await expect(loginAction(idleState, formData)).resolves.toEqual({
       status: "unauthorized",
       message: "E-mail ou senha inválidos.",
-      values: { email: "admin@classhub.local" },
+      values: { email: "admin@edutrack.local" },
     });
   });
 
@@ -73,7 +73,7 @@ describe("auth actions", () => {
     consumeLoginAttempt.mockImplementationOnce(async () => { order.push("throttle"); return { allowed: true }; });
     authenticate.mockImplementationOnce(async () => { order.push("authenticate"); return { ok: false, reason: "invalid_credentials" }; });
     const formData = new FormData();
-    formData.set("email", "admin@classhub.local");
+    formData.set("email", "admin@edutrack.local");
     formData.set("password", "senha");
 
     await loginAction(idleState, formData);
@@ -82,9 +82,9 @@ describe("auth actions", () => {
   });
 
   it("starts a session and redirects after valid credentials", async () => {
-    authenticate.mockResolvedValueOnce({ ok: true, user: { id: "user-1", name: "Admin", email: "admin@classhub.local" } });
+    authenticate.mockResolvedValueOnce({ ok: true, user: { id: "user-1", name: "Admin", email: "admin@edutrack.local" } });
     const formData = new FormData();
-    formData.set("email", "admin@classhub.local");
+    formData.set("email", "admin@edutrack.local");
     formData.set("password", "senha");
 
     await expect(loginAction(idleState, formData)).rejects.toThrow("redirect:/");

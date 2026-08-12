@@ -1,4 +1,4 @@
-# ClassHub
+# EduTrack
 
 Sistema administrativo privado para um professor particular acompanhar alunos, aulas, frequência, atividades, pendências e relatórios em PDF.
 
@@ -26,17 +26,17 @@ Não são usados Docker, SQLite, Supabase, Firebase ou banco em memória.
 No `psql` ou no pgAdmin, crie o banco:
 
 ```sql
-CREATE DATABASE classhub;
+CREATE DATABASE edutrack;
 ```
 
 Copie `.env.example` para `.env` e ajuste usuário e senha. Em uma instalação local, `DATABASE_URL` e `DIRECT_URL` podem ser iguais:
 
 ```env
-DATABASE_URL="postgresql://postgres:senha@localhost:5432/classhub"
-DIRECT_URL="postgresql://postgres:senha@localhost:5432/classhub"
+DATABASE_URL="postgresql://postgres:senha@localhost:5432/edutrack"
+DIRECT_URL="postgresql://postgres:senha@localhost:5432/edutrack"
 INITIAL_ADMIN_NAME="Professor"
-INITIAL_ADMIN_EMAIL="admin@classhub.local"
-INITIAL_ADMIN_PASSWORD="ClassHub@1234"
+INITIAL_ADMIN_EMAIL="admin@edutrack.local"
+INITIAL_ADMIN_PASSWORD="EduTrack@1234"
 SESSION_SECRET="gere-um-segredo-com-pelo-menos-32-caracteres"
 APP_URL="http://localhost:3000"
 NODE_ENV="development"

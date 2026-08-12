@@ -14,12 +14,12 @@ import DashboardLayout from "@/app/(dashboard)/layout";
 
 describe("DashboardLayout", () => {
   it("requires the current user and passes only safe user data to the header", async () => {
-    requireCurrentUser.mockResolvedValue({ id: "user-1", name: "Ana Lima", email: "ana@classhub.local", passwordHash: "secret" });
+    requireCurrentUser.mockResolvedValue({ id: "user-1", name: "Ana Lima", email: "ana@edutrack.local", passwordHash: "secret" });
 
     render(await DashboardLayout({ children: <p>Conteúdo</p> }));
 
     expect(requireCurrentUser).toHaveBeenCalledOnce();
-    expect(appHeader).toHaveBeenCalledWith({ user: { id: "user-1", name: "Ana Lima", email: "ana@classhub.local" } }, undefined);
-    expect(screen.getByTestId("header")).toHaveTextContent("Ana Lima:ana@classhub.local");
+    expect(appHeader).toHaveBeenCalledWith({ user: { id: "user-1", name: "Ana Lima", email: "ana@edutrack.local" } }, undefined);
+    expect(screen.getByTestId("header")).toHaveTextContent("Ana Lima:ana@edutrack.local");
   });
 });

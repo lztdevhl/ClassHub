@@ -11,9 +11,9 @@ vi.mock("@/actions/auth-actions", () => ({ logoutAction: vi.fn() }));
 describe("AppHeader", () => {
   afterEach(cleanup);
   it("exposes the user menu, disabled settings and logout", () => {
-    render(<AppHeader user={{ id: "user-1", name: "Ana Lima", email: "ana@classhub.local" }} />);
+    render(<AppHeader user={{ id: "user-1", name: "Ana Lima", email: "ana@edutrack.local" }} />);
 
-    const trigger = screen.getByRole("button", { name: /ana lima.*ana@classhub.local/i });
+    const trigger = screen.getByRole("button", { name: /ana lima.*ana@edutrack.local/i });
     fireEvent.pointerDown(trigger, { button: 0, ctrlKey: false });
 
     expect(screen.getByText("Configurações")).toHaveAttribute("data-disabled");
@@ -21,7 +21,7 @@ describe("AppHeader", () => {
   });
 
   it("opens and closes the mobile dialog with Escape and a navigation item", async () => {
-    render(<AppHeader user={{ id: "user-1", name: "Ana Lima", email: "ana@classhub.local" }} />);
+    render(<AppHeader user={{ id: "user-1", name: "Ana Lima", email: "ana@edutrack.local" }} />);
 
     const openButton = screen.getByRole("button", { name: "Abrir menu" });
     openButton.focus();
