@@ -1,3 +1,3 @@
 import { getCurrentUser } from "@/lib/auth/session";
 
-export async function GET() { const user = await getCurrentUser(); if (!user) return new Response("Não autorizado", { status: 401 }); const csv = "nome,turma,email,telefone,observacoes,status\r\nAna Beatriz Lima,9B,ana@example.com,,,ativo\r\n"; return new Response(`\uFEFF${csv}`, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=classhub-modelo-alunos.csv" } }); }
+export async function GET() { const user = await getCurrentUser(); if (!user) return new Response("Não autorizado", { status: 401 }); const csv = "nome,turma,email,telefone,observacoes,status\r\n"; return new Response(`\uFEFF${csv}`, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=classhub-modelo-alunos.csv" } }); }

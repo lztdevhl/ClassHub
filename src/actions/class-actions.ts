@@ -32,3 +32,13 @@ export async function updateClass(id: string, formData: FormData): Promise<void>
   revalidatePath("/turmas"); revalidatePath(`/turmas/${id}`);
   redirect(`/turmas/${id}?success=${encodeURIComponent("Turma atualizada com sucesso.")}`);
 }
+
+export async function deleteClass(id: string, formData: FormData): Promise<void> {
+  await requireCurrentUser();
+  if (formData.get("confirmed") !== "yes") redirect(`/turmas/${id}/excluir`);
+
+  await prisma.classGroup.delete({ where: { id } });
+  revalidatePath("/dashboard"); revalidatePath("/turmas"); revalidatePath("/alunos");
+  revalidatePath("/aulas"); revalidatePath("/relatorios");
+  redirect(`/turmas?success=${encodeURIComponent("Turma excluída. Alunos e aulas foram preservados.")}`);
+}

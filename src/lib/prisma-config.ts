@@ -1,5 +1,3 @@
-const offlineDatasourceUrl = "postgresql://classhub:offline@localhost:5432/classhub";
-
 function isOfflinePrismaCommand(args: readonly string[]): boolean {
   const [command, subcommand] = args;
 
@@ -10,9 +8,11 @@ function isOfflinePrismaCommand(args: readonly string[]): boolean {
 export function resolvePrismaDatasourceUrl(
   args: readonly string[],
   directUrl?: string,
+  databaseUrl?: string,
 ): string {
   if (directUrl) return directUrl;
-  if (isOfflinePrismaCommand(args)) return offlineDatasourceUrl;
+  if (databaseUrl) return databaseUrl;
+  if (isOfflinePrismaCommand(args)) return "";
 
-  throw new Error("DIRECT_URL is required for Prisma commands that access the database.");
+  throw new Error("DIRECT_URL or DATABASE_URL is required for Prisma commands that access the database.");
 }

@@ -53,7 +53,7 @@ npx prisma migrate dev
 npx prisma db seed
 ```
 
-O seed é idempotente e cria um administrador, 5 alunos e 18 aulas variadas. A senha fica somente como hash bcrypt. Altere a senha de desenvolvimento em **Configurações** antes de uso real.
+O seed é idempotente e provisiona somente o administrador inicial, sem criar alunos, aulas ou outros dados de demonstração. A senha fica somente como hash bcrypt. Altere a senha de desenvolvimento em **Configurações** antes de uso real.
 
 ## Executar
 

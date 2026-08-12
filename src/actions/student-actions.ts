@@ -40,3 +40,17 @@ export async function archiveStudent(id: string): Promise<void> {
   revalidatePath("/dashboard"); revalidatePath("/alunos"); revalidatePath(`/alunos/${id}`);
   redirect(`/alunos/${id}?success=${encodeURIComponent("Aluno arquivado. O histórico foi preservado.")}`);
 }
+
+export async function deleteStudent(id: string, formData: FormData): Promise<void> {
+  await requireCurrentUser();
+  if (formData.get("confirmed") !== "yes") redirect(`/alunos/${id}/excluir`);
+
+  await prisma.$transaction(async (transaction) => {
+    await transaction.lesson.deleteMany({ where: { studentId: id } });
+    await transaction.student.delete({ where: { id } });
+  });
+
+  revalidatePath("/dashboard"); revalidatePath("/alunos"); revalidatePath("/aulas");
+  revalidatePath("/pendencias"); revalidatePath("/relatorios"); revalidatePath("/turmas");
+  redirect(`/alunos?success=${encodeURIComponent("Aluno e histórico de aulas excluídos.")}`);
+}
