@@ -29,7 +29,10 @@ export async function GET(request: Request) {
   for (const lesson of report.lessons) {
     pdf.ensure(115);
     pdf.text(`${formatDate(lesson.lessonDate)} - ${lesson.student.name}`, { size: 11, bold: true });
-    pdf.text(`Presenca: ${lesson.attendanceStatus === "PRESENT" ? "Presente" : "Falta"} | Atividade: ${lesson.activityCompleted ? "Concluida" : "Pendente"}`, { size: 9 });
+    pdf.textSegments([
+      { value: `Presenca: ${lesson.attendanceStatus === "PRESENT" ? "Presente" : "Falta"} | Atividade: ` },
+      { value: lesson.activityCompleted ? "Concluida" : "Pendente", color: lesson.activityCompleted ? [0.06, 0.45, 0.22] : [0.72, 0.08, 0.12] },
+    ], { size: 9 });
     pdf.text(`Conteudo: ${lesson.content || "-"}`, { size: 9, indent: 56 });
     pdf.text(`Atividade: ${lesson.activity || "-"}`, { size: 9, indent: 56 });
     if (lesson.notes) pdf.text(`Observacoes: ${lesson.notes}`, { size: 9, indent: 56 });
