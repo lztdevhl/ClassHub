@@ -23,7 +23,7 @@ export async function GET(request: Request) {
   pdf.text(`Gerado em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "long", timeStyle: "short" }).format(new Date())}`);
   pdf.text([`Periodo: ${params.from || "inicio"} ate ${params.to || "hoje"}`, `Presenca: ${params.attendance || "todas"}`, `Atividade: ${params.activity === "true" ? "concluida" : params.activity === "false" ? "pendente" : "todas"}`].join(" | "), { size: 9 });
   pdf.space(10);
-  pdf.text(`Resumo: ${report.summary.total} aulas | ${report.summary.present} presencas | ${report.summary.absent} faltas | ${report.summary.attendancePercent}% de presenca`, { bold: true });
+  pdf.text(`Resumo: ${report.summary.students} alunos | ${report.summary.present} presencas | ${report.summary.absent} faltas | ${report.summary.attendancePercent}% de presenca`, { bold: true });
   pdf.text(`Atividades: ${report.summary.completed} concluidas | ${report.summary.pending} pendentes`);
   pdf.space(12);
   for (const lesson of report.lessons) {
